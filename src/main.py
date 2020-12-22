@@ -134,7 +134,7 @@ class Game:
             reward = self.p.act(action)
             self.set_dir(action_index)
             reward = self.get_reward(reward)
-            new_state = self.get_state()
+            new_state, _ = self.get_state()
             self.memory.append((state, action_index, new_state, reward, self.p.game_over()))
             # if we reached the required batch size train model
             if frame == self.batch_size:
