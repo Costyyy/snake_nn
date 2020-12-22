@@ -1,32 +1,16 @@
-from tensorflow.keras.models import Sequential
-from tensorflow.keras.layers import Dense, Activation, Dropout
-from tensorflow.keras.optimizers import SGD
-from tensorflow.keras.callbacks import Callback
-import numpy as np
+
+from tensorflow.keras import Sequential
+from tensorflow.keras.layers import Dense
+from tensorflow.keras.optimizers import Adam
 
 
-def neural_net(hiddenLayerDims, LoadWeights=''):
-    # create nural network (keras model)
-    neuralNet = Sequential()
+def neural_net():
+    model = Sequential()
 
-    # create the dense input layer
-    neuralNet.add(Dense(hiddenLayerDims[0], input_shape=(4,), input_dim=4))
-    neuralNet.add(Activation('sigmoid'))
+    model.add(Dense(128, input_shape=(12,), activation='relu'))
+    model.add(Dense(128, activation='relu'))
+    model.add(Dense(128, activation='relu'))
+    model.add(Dense(4, activation='softmax'))
+    model.compile(loss='mse', optimizer=Adam(lr=0.01))
 
-    # create second layer (first hidden layer)
-    neuralNet.add(Dense(hiddenLayerDims[1]))
-    neuralNet.add(Activation('sigmoid'))
-
-    # create third and last layer
-    neuralNet.add(Dense(4))
-    neuralNet.add(Activation('softmax'))
-
-    if LoadWeights:
-        neuralNet.load_weights(LoadWeights)
-
-    # create the optimizer (Stochastic Gradient Descent)
-    sgd = SGD(lr=0.01, decay=0.0, momentum=0.0, nesterov=False)
-    # Use mean squared error loss and SGD as optimizer
-    neuralNet.compile(loss='mse', optimizer=sgd)
-
-    return neuralNet
+    return model
