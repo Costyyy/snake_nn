@@ -49,7 +49,7 @@ class Game:
                 dones = np.array([i[4] for i in minibatch])
                 states = np.squeeze(states)
                 next_states = np.squeeze(next_states)
-                # adjust predictions using the obtained rewards
+                # adjust predicted actions using the obtained rewards, discarding predicted value if the game was lost
                 targets = rewards + self.gamma * (np.amax(self.model.predict_on_batch(next_states), axis=1)) * (1-dones)
                 targets_full = self.model.predict_on_batch(states)
                 ind = np.array([i for i in range(self.batch_size)])
