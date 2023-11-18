@@ -1,7 +1,7 @@
 from random import random, choice, randrange, sample
 from snake_env import Snake
 
-from ple import PLE
+# from ple import PLE
 from nNetwork import neural_net
 import numpy as np
 
